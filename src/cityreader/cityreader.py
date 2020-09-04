@@ -74,13 +74,47 @@ for c in cities:
 # Salt Lake City: (40.7774,-111.9301)
 
 # TODO Get latitude and longitude values from the user
+lat1 = 0
+lon1 = 0
+lat2 = 0
+lon2 = 0
+def get_points(): 
+  user_input = input("What are the 4 points you'd like to search within?\nPlease use decimal numbers in this format:\nlatitude_1 longitude_1 latitude_2 longitude_2\n --> ")
+  split_input = user_input.split(" ")
+  print(user_input)
+
+  if len(split_input) == 4:
+    lat1 = int(split_input[0])
+    lon1 = int(split_input[1])
+    lat2 = int(split_input[2])
+    lon2 = int(split_input[3])
+  else:
+    print("Four values are needed for this operation.")
 
 def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
   # within will hold the cities that fall within the specified region
   within = []
+  # print(lat1, lat2, lon1, lon2)
+  if lat1 > lat2:
+    lat1, lat2 = lat2, lat1
+    lon1, lon2 = lon2, lon1
 
-  # TODO Ensure that the lat and lon valuse are all floats
+  # TODO Ensure that the lat and lon values are all floats
   # Go through each city and check to see if it falls within 
   # the specified coordinates.
 
+  for c in cities:
+    if float(c.lat) >= lat1 and float(c.lat) <= lat2 and float(c.lon) >= lon1 and float(c.lon) <= lon2:
+      within.append(c)
+
   return within
+
+
+
+a = cityreader_stretch(45, -100, 32, -120, cities)
+b = cityreader_stretch(32, -120, 45, -100, cities)
+for city in a:
+  print(city.name)
+  print("\n\n")
+for city in b:
+  print(city.name)
